@@ -1,5 +1,25 @@
 package com.gundogar.e_commerce_demo
 
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.POST
+
 interface ProductService {
 
+
+    @GET("tumUrunleriGetir.php")
+    suspend fun getAllProducts(): ProductResponse
+
+    @FormUrlEncoded
+    @POST("sepeteUrunEkle.php")
+    suspend fun addToBasket(
+        @Field("ad") ad: String,
+        @Field("resim") resim: String,
+        @Field("kategori") kategori: String,
+        @Field("fiyat") fiyat: Int,
+        @Field("marka") marka: String,
+        @Field("siparisAdeti") siparisAdeti: Int,
+        @Field("kullaniciAdi") kullaniciAdi: String
+    ): ApiResponse
 }
