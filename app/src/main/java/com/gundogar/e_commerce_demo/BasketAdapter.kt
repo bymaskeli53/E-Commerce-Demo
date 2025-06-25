@@ -3,6 +3,7 @@ package com.gundogar.e_commerce_demo
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.gundogar.e_commerce_demo.databinding.ItemBasketBinding
 
 
@@ -23,9 +24,21 @@ class BasketAdapter(
 
     override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
         val product = productList[position]
-        holder.binding.tvBasketName.text = product.name
-        holder.binding.root.setOnClickListener {
-            onItemClick(product)
+        with(holder.binding) {
+            ivBasketProductImage.load(product.image.toFullImageUrl()) {
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_background)
+                error(R.drawable.ic_launcher_foreground)
+
+            }
+            tvBasketProductName.text = product.name
+            tvBasketQuantity.text = product.numberOfOrders.toString()
+            tvBasketProductPrice.text = product.price.toString()
+            tvTotalPrice.text = (product.numberOfOrders * product.price).toString()
+            btnDeleteProduct.setOnClickListener {
+                onItemClick(product)
+            }
+
         }
 
     }

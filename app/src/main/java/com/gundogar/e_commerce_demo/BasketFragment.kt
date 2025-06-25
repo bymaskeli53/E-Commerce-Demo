@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -31,6 +32,7 @@ class BasketFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        completeOrder()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.basketItems.collect {
@@ -38,11 +40,27 @@ class BasketFragment : Fragment() {
                         viewModel.deleteBasketItems(it.basketId)
                     }
                     binding.rvBasket.adapter = adapter
+                    setTotalPrice(it.sumOf { it.price * it.numberOfOrders })
                 }
             }
         }
 
 
+    }
+
+    private fun setTotalPrice(totalPrice: Int) {
+        binding.tvTotalPrice.text = totalPrice.toString()
+    }
+
+    private fun completeOrder() {
+        binding.btnConfirmBasket.setOnClickListener {
+            Toast.makeText(requireContext(), "Order Completed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getBasketItems()
     }
 
 }

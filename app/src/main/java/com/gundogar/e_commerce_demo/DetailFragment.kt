@@ -4,27 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.gundogar.e_commerce_demo.databinding.FragmentDetailBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+/**
+ * Ürün detaylarını gösteren fragment sınıfı
+ */
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
     private val navigationArgs: DetailFragmentArgs by navArgs()
-
-    private val viewModel: DetailViewModel by viewModels()
-
-    private var currentQuantity = 1
-    private val minQuantity = 1
-    private val maxQuantity = 99
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +31,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupProductDetails()
-        setupQuantityControls()
-        setupAddToBasketButton()
     }
 
     override fun onDestroyView() {
@@ -47,6 +38,9 @@ class DetailFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * Ürün bilgilerini UI elementlerine bağlar
+     */
     private fun setupProductDetails() {
         val selectedProduct = navigationArgs.product
 
@@ -59,23 +53,9 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun setupQuantityControls() {
-        binding.btnDecrement.setOnClickListener {
-            decrementQuantity()
-        }
-
-        binding.btnIncrement.setOnClickListener {
-            incrementQuantity()
-        }
-    }
-
-    private fun setupAddToBasketButton() {
-        binding.btnAddToBasket.setOnClickListener {
-            addProductToBasket()
-        }
-    }
-
-
+    /**
+     * Ürün resmini yükler ve görüntüler
+     */
     private fun loadProductImage(imageUrl: String) {
         binding.ivProductImage.load(imageUrl.toFullImageUrl()) {
             placeholder(R.drawable.ic_launcher_background)
@@ -85,49 +65,10 @@ class DetailFragment : Fragment() {
         }
     }
 
-//    private fun observeViewModel() {
-//        lifecycleScope.launch {
-//            viewModel.basketState.collect
-//        }
-//    }
-
-    private fun decrementQuantity() {
-        if (currentQuantity > minQuantity) {
-            currentQuantity--
-            binding.tvQuantity.text = currentQuantity.toString()
-            updateButtonStates()
-        }
+    /**
+     * Fiyatı formatlar
+     */
+    private fun formatPrice(price: Double): String {
+        return "$${"%.2f".format(price)}"
     }
-
-    private fun incrementQuantity() {
-        if (currentQuantity < maxQuantity) {
-            currentQuantity++
-            binding.tvQuantity.text = currentQuantity.toString()
-            updateButtonStates()
-        }
-    }
-
-    private fun updateButtonStates() {
-        binding.btnDecrement.isEnabled = currentQuantity > minQuantity
-        binding.btnIncrement.isEnabled = currentQuantity < maxQuantity
-    }
-
-    private fun addProductToBasket() {
-        val selectedProduct = navigationArgs.product
-
-        viewModel.addToBasket(
-            ad = selectedProduct.name,
-            resim = selectedProduct.image,
-            kategori = selectedProduct.category,
-            fiyat = selectedProduct.price.toInt(),
-            marka = selectedProduct.brand,
-            siparisAdeti = currentQuantity,
-            kullaniciAdi = "muhammet_gundogar"
-        )
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
 }
