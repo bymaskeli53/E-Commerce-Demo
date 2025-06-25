@@ -26,7 +26,10 @@ class ProductAdapter(
 
         with(holder.binding) {
             tvProductName.text = product.name
-            tvProductPrice.text = product.price.toString() + " TL"
+            tvProductPrice.text = buildString {
+                append(product.price.toString())
+                append(" TL")
+            }
 
             ivProduct.load(product.image.toFullImageUrl()) {
                 crossfade(true)
