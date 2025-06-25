@@ -22,4 +22,10 @@ interface ProductService {
         @Field("siparisAdeti") siparisAdeti: Int,
         @Field("kullaniciAdi") kullaniciAdi: String
     ): ApiResponse
+
+    @FormUrlEncoded
+    @POST("sepettekiUrunleriGetir.php")
+    suspend fun getBasketItems(
+        @Field("kullaniciAdi") kullaniciAdi: String
+    ): BasketResponse
 }

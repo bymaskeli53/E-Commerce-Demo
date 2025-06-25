@@ -9,42 +9,37 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.gundogar.e_commerce_demo.databinding.FragmentHomeBinding
+import com.gundogar.e_commerce_demo.databinding.FragmentBasketBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class BasketFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: BasketViewModel by viewModels()
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentBasketBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentBasketBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect {
-                    val adapter = ProductAdapter(it) {
-                        val action = HomeFragmentDirections.actionHomeFragmentToBasketFragment()
-                        findNavController().navigate(action)
-
-                    }
-                    binding.rvProducts.adapter = adapter
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.basketItems.collect {
+                    val adapter = BasketAdapter(it)
+                    binding.rvBasket.adapter = adapter
                 }
             }
         }
+
 
     }
 

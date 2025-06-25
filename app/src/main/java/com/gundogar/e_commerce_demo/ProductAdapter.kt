@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gundogar.e_commerce_demo.databinding.ItemProductBinding
 
 class ProductAdapter(
-    private val productList: List<Product>
+    private val productList: List<Product>,
+    private val onItemClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(val binding: ItemProductBinding) :
@@ -22,6 +23,9 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
         holder.binding.tvProductName.text = product.name
+        holder.binding.root.setOnClickListener {
+            onItemClick(product)
+        }
     }
 
     override fun getItemCount(): Int = productList.size
