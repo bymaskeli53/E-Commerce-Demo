@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.products.collect {
                     val adapter = ProductAdapter(it) {
-                        val action = HomeFragmentDirections.actionHomeFragmentToBasketFragment()
+                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
                         findNavController().navigate(action)
 
                     }

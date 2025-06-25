@@ -25,4 +25,11 @@ class BasketViewModel @Inject constructor(private val productService: ProductSer
             _basketItems.value = productResponse.basketProducts
         }
     }
+
+    fun deleteBasketItems(productId: Int) {
+        viewModelScope.launch {
+            productService.deleteFromBasket(productId)
+            getBasketItems()
+        }
+    }
 }

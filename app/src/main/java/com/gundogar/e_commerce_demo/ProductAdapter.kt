@@ -3,6 +3,7 @@ package com.gundogar.e_commerce_demo
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.gundogar.e_commerce_demo.databinding.ItemProductBinding
 
 class ProductAdapter(
@@ -22,9 +23,20 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
-        holder.binding.tvProductName.text = product.name
-        holder.binding.root.setOnClickListener {
-            onItemClick(product)
+
+        with(holder.binding) {
+            tvProductName.text = product.name
+            tvProductPrice.text = product.price.toString() + " TL"
+
+            ivProduct.load(product.image.toFullImageUrl()) {
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_background)
+                error(R.drawable.ic_launcher_foreground)
+            }
+
+            root.setOnClickListener {
+                onItemClick(product)
+            }
         }
     }
 

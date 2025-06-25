@@ -1,6 +1,7 @@
 package com.gundogar.e_commerce_demo
 
 import com.facebook.shimmer.BuildConfig
+import com.gundogar.e_commerce_demo.NetworkConstants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    const val BASE_URL = "http://kasimadalan.pe.hu/urunler/"
+
 
     @Provides
     @Singleton

@@ -7,7 +7,8 @@ import com.gundogar.e_commerce_demo.databinding.ItemBasketBinding
 
 
 class BasketAdapter(
-    private val productList: List<BasketProduct>
+    private val productList: List<BasketProduct>,
+    private val onItemClick: (BasketProduct) -> Unit
 ) : RecyclerView.Adapter<BasketAdapter.BasketViewHolder>() {
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
@@ -23,6 +24,9 @@ class BasketAdapter(
     override fun onBindViewHolder(holder: BasketViewHolder, position: Int) {
         val product = productList[position]
         holder.binding.tvBasketName.text = product.name
+        holder.binding.root.setOnClickListener {
+            onItemClick(product)
+        }
 
     }
 

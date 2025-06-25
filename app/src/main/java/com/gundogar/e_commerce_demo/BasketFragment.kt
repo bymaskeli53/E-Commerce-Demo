@@ -32,9 +32,11 @@ class BasketFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.basketItems.collect {
-                    val adapter = BasketAdapter(it)
+                    val adapter = BasketAdapter(it) {
+                        viewModel.deleteBasketItems(it.basketId)
+                    }
                     binding.rvBasket.adapter = adapter
                 }
             }

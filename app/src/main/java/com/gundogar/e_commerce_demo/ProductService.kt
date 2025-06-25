@@ -26,6 +26,13 @@ interface ProductService {
     @FormUrlEncoded
     @POST("sepettekiUrunleriGetir.php")
     suspend fun getBasketItems(
-        @Field("kullaniciAdi") kullaniciAdi: String
+        @Field("kullaniciAdi") kullaniciAdi: String = "muhammet_gundogar"
     ): BasketResponse
+
+    @FormUrlEncoded
+    @POST("sepettenUrunSil.php")
+    suspend fun deleteFromBasket(
+        @Field("sepetId") sepetId: Int,
+        @Field("kullaniciAdi") userName: String = "muhammet_gundogar"
+    ): ApiResponse
 }
