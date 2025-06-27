@@ -1,0 +1,64 @@
+<com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmerViewContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="1500"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="16dp"
+        card_view:cardElevation="8dp"
+        android:layout_margin="8dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="#F1E6D7">
+
+            <!-- Ürün Görseli -->
+            <ImageView
+                android:id="@+id/iv_product"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/shimmer_placeholder"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Ürün Adı -->
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ürün Adı"
+                android:background="@drawable/shimmer_placeholder"
+                android:textColor="#4E342E"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <!-- Ürün Fiyatı -->
+            <TextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="₺999.99"
+                android:textColor="#D84315"
+                android:background="@drawable/shimmer_placeholder"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</com.facebook.shimmer.ShimmerFrameLayout>

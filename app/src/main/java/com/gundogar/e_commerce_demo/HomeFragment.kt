@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.gundogar.e_commerce_demo.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,7 +40,26 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeUiState()
-       // viewModel.getProducts()
+
+//        ViewCompat.setOnApplyWindowInsetsListener(
+//            binding.rvProducts
+//        ) { v, insets ->
+//            val innerPadding = insets.getInsets(
+//                WindowInsetsCompat.Type.systemBars()
+//                        or WindowInsetsCompat.Type.displayCutout()
+//                // If using EditText, also add
+//                // "or WindowInsetsCompat.Type.ime()" to
+//                // maintain focus when opening the IME
+//            )
+//            v.setPadding(
+//                innerPadding.left,
+//                innerPadding.top,
+//                innerPadding.right,
+//                innerPadding.bottom)
+//            insets
+//        }
+
+        // viewModel.getProducts()
 
 
     }
@@ -49,16 +71,25 @@ class HomeFragment : Fragment() {
                 viewModel.products.collect { result ->
                     when (result) {
                         is ApiResult.Loading -> {
+                            binding.shimmerContainer.startShimmer()
+                            binding.shimmerContainer.visibility = View.VISIBLE
+                            binding.rvProducts.visibility = View.GONE
 
                         }
 
                         is ApiResult.Success -> {
+                            binding.shimmerContainer.stopShimmer()
+                            binding.shimmerContainer.visibility = View.GONE
+                            binding.rvProducts.visibility = View.VISIBLE
                             productAdapter.submitList(result.data.products)
 
                         }
 
                         is ApiResult.Error -> {
-                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                            binding.shimmerContainer.stopShimmer()
+                            binding.shimmerContainer.visibility = View.GONE
+                            binding.rvProducts.visibility = View.GONE
+                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
 
                         }
                     }
