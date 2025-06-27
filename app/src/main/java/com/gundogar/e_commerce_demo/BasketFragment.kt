@@ -36,8 +36,15 @@ class BasketFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.basketItems.collect {
+                    if (it.isEmpty()) {
+                        binding.tvEmptyList.show()
+                    }
+                    else {
+                        binding.tvEmptyList.gone()
+                    }
                     val adapter = BasketAdapter(it) {
                         viewModel.deleteBasketItems(it.basketId)
+
                     }
                     binding.rvBasket.adapter = adapter
                     setTotalPrice(it.sumOf { it.price * it.numberOfOrders })

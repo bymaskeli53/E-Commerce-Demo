@@ -2,19 +2,18 @@ package com.gundogar.e_commerce_demo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.gundogar.e_commerce_demo.databinding.ItemProductBinding
 
 class ProductAdapter(
-    private val productList: List<Product>,
     private val onItemClick: (Product) -> Unit
-) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     inner class ProductViewHolder(val binding: ItemProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,14 +21,11 @@ class ProductAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = productList[position]
+        val product = getItem(position)
 
         with(holder.binding) {
             tvProductName.text = product.name
-            tvProductPrice.text = buildString {
-                append(product.price.toString())
-                append(" TL")
-            }
+            tvProductPrice.text = "${product.price} TL"
 
             ivProduct.load(product.image.toFullImageUrl()) {
                 crossfade(true)
@@ -43,5 +39,13 @@ class ProductAdapter(
         }
     }
 
-    override fun getItemCount(): Int = productList.size
+    class ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem.id == newItem.id // id varsa
+        }
+
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

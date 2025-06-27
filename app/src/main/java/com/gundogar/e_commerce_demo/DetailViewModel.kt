@@ -10,9 +10,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(private val prodcutService: ProductService) :
     ViewModel() {
 
-
-
-    fun addToBasket(
+        fun addToBasket(
         ad: String,
         resim: String,
         kategori: String,
@@ -34,4 +32,5 @@ class DetailViewModel @Inject constructor(private val prodcutService: ProductSer
             )
         }
     }
+
 }

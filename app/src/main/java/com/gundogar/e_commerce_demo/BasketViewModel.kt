@@ -21,8 +21,14 @@ class BasketViewModel @Inject constructor(private val productService: ProductSer
 
     fun getBasketItems() {
         viewModelScope.launch {
-            val productResponse = productService.getBasketItems("muhammet_gundogar")
-            _basketItems.value = productResponse.basketProducts
+            try {
+                val productResponse = productService.getBasketItems("muhammet_gundogar")
+                _basketItems.value = productResponse.basketProducts
+            } catch (e: Exception) {
+                _basketItems.value = emptyList()
+
+            }
+
         }
     }
 

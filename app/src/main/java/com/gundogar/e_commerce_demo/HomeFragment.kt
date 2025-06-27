@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,6 +22,8 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var productAdapter: ProductAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,19 +35,44 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeUiState()
+       // viewModel.getProducts()
+
+
+    }
+
+
+    private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect {
-                    val adapter = ProductAdapter(it) {
-                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
-                        findNavController().navigate(action)
+                viewModel.products.collect { result ->
+                    when (result) {
+                        is ApiResult.Loading -> {
 
+                        }
+
+                        is ApiResult.Success -> {
+                            productAdapter.submitList(result.data.products)
+
+                        }
+
+                        is ApiResult.Error -> {
+                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+
+                        }
                     }
-                    binding.rvProducts.adapter = adapter
                 }
             }
         }
+    }
 
+    private fun setupRecyclerView() {
+        productAdapter = ProductAdapter(onItemClick = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+            findNavController().navigate(action)
+        })
+        binding.rvProducts.adapter = productAdapter
     }
 
 }
