@@ -7,10 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.gundogar.e_commerce_demo.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -114,16 +119,26 @@ class DetailFragment : Fragment() {
 
     private fun addProductToBasket() {
         val selectedProduct = navigationArgs.product
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addToBasket(
+                    ad = selectedProduct.name,
+                    resim = selectedProduct.image,
+                    kategori = selectedProduct.category,
+                    fiyat = selectedProduct.price.toInt(),
+                    marka = selectedProduct.brand,
+                    siparisAdeti = currentQuantity,
+                    kullaniciAdi = "muhammet_gundogar"
+                )
+                findNavController().popBackStack()
+                showToast("Ürün sepete eklendi.")
+            }
 
-        viewModel.addToBasket(
-            ad = selectedProduct.name,
-            resim = selectedProduct.image,
-            kategori = selectedProduct.category,
-            fiyat = selectedProduct.price.toInt(),
-            marka = selectedProduct.brand,
-            siparisAdeti = currentQuantity,
-            kullaniciAdi = "muhammet_gundogar"
-        )
+        }
+
+
+
+
     }
 
     private fun showToast(message: String) {

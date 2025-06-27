@@ -1,16 +1,14 @@
 package com.gundogar.e_commerce_demo
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val prodcutService: ProductService) :
+class DetailViewModel @Inject constructor(private val productService: ProductService) :
     ViewModel() {
 
-        fun addToBasket(
+    suspend fun addToBasket(
         ad: String,
         resim: String,
         kategori: String,
@@ -19,8 +17,13 @@ class DetailViewModel @Inject constructor(private val prodcutService: ProductSer
         siparisAdeti: Int,
         kullaniciAdi: String
     ) {
-        viewModelScope.launch {
-            prodcutService.addToBasket(
+        val basketResponse = productService.getBasketItems()
+        val existingProduct = basketResponse.basketProducts?.find {
+            it.name == ad
+        }
+
+        if (existingProduct == null) {
+            productService.addToBasket(
                 ad,
                 resim,
                 kategori,
