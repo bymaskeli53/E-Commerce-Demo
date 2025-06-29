@@ -90,12 +90,6 @@ class DetailFragment : Fragment() {
         }
     }
 
-//    private fun observeViewModel() {
-//        lifecycleScope.launch {
-//            viewModel.basketState.collect
-//        }
-//    }
-
     private fun decrementQuantity() {
         if (currentQuantity > minQuantity) {
             currentQuantity--
@@ -135,10 +129,6 @@ class DetailFragment : Fragment() {
             }
 
         }
-
-
-
-
     }
 
     private fun showToast(message: String) {
