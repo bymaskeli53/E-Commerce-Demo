@@ -40,28 +40,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeUiState()
-
-//        ViewCompat.setOnApplyWindowInsetsListener(
-//            binding.rvProducts
-//        ) { v, insets ->
-//            val innerPadding = insets.getInsets(
-//                WindowInsetsCompat.Type.systemBars()
-//                        or WindowInsetsCompat.Type.displayCutout()
-//                // If using EditText, also add
-//                // "or WindowInsetsCompat.Type.ime()" to
-//                // maintain focus when opening the IME
-//            )
-//            v.setPadding(
-//                0,
-//                0,
-//                0,
-//                innerPadding.bottom)
-//            insets
-//        }
-
-        // viewModel.getProducts()
-
-
     }
 
 

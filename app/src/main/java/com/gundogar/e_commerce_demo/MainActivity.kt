@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
-       // WindowCompat.setDecorFitsSystemWindows(window, true)
-
-
-        //setupActionBarWithNavController(navController)
 
         NavigationUI.setupWithNavController(binding.bottomNavView, navController)
 
@@ -47,27 +43,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right,0)
             insets
         }
-
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavView) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            // Sadece alt padding'i sistem navigation bar'ı için ayarla
-//            v.setPadding(0, 0, 0, systemBars.bottom)
-//            insets
-//        }
-
-//        ViewCompat.setOnApplyWindowInsetsListener(
-//            getWindow().getDecorView(),
-//            OnApplyWindowInsetsListener { v: View?, insets: WindowInsetsCompat? ->
-//                val systemInsets: Insets = insets!!.getInsets(WindowInsetsCompat.Type.systemBars())
-//                v!!.setPadding(
-//                    v.getPaddingLeft(),
-//                    v.getPaddingTop(),
-//                    v.getPaddingRight(),
-//                    v.getPaddingBottom() - systemInsets.bottom
-//                ) // subtract the insets from the bottom padding
-//                insets
-//            })
-
     }
     override fun onSupportNavigateUp(): Boolean = super.onSupportNavigateUp() || navController.navigateUp()
 

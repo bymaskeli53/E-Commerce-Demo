@@ -12,8 +12,9 @@ import javax.inject.Inject
 @HiltViewModel
 class BasketViewModel @Inject constructor(private val productService: ProductService) :
     ViewModel() {
-    private val _basketItems = MutableStateFlow<List<BasketProduct>>(emptyList())
-    val basketItems: StateFlow<List<BasketProduct>> = _basketItems.asStateFlow()
+
+    private val _basketItems = MutableStateFlow<ApiResult<List<BasketProduct>>>(ApiResult.Loading)
+    val basketItems: StateFlow<ApiResult<List<BasketProduct>>> = _basketItems
 
     init {
         getBasketItems()
@@ -21,14 +22,16 @@ class BasketViewModel @Inject constructor(private val productService: ProductSer
 
     fun getBasketItems() {
         viewModelScope.launch {
+            _basketItems.value = ApiResult.Loading
             try {
-                val productResponse = productService.getBasketItems("muhammet_gundogar")
-                _basketItems.value = productResponse.basketProducts
+                val response = productService.getBasketItems("muhammet_gundogar")
+                _basketItems.value = ApiResult.Success(response.basketProducts)
             } catch (e: Exception) {
-                _basketItems.value = emptyList()
-
+                _basketItems.value = ApiResult.Error(
+                    message = e.localizedMessage ?: "Hata oluştu",
+                    exception = e
+                )
             }
-
         }
     }
 

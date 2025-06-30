@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,23 +41,44 @@ class BasketFragment : Fragment() {
         completeOrder()
 
         binding.rvBasket.adapter = basketAdapter
+        observeBasketUiState()
+
+
+    }
+
+    private fun observeBasketUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.basketItems.collect { basketItems ->
-                    if (basketItems.isEmpty()) {
-                        binding.tvEmptyList.show()
-                        binding.ivEmptyBasket.show()
-                    } else {
-                        binding.tvEmptyList.gone()
-                        binding.ivEmptyBasket.gone()
+                viewModel.basketItems.collect { result ->
+                    when (result) {
+                        is ApiResult.Loading -> {
+                            binding.lottieLoading.visibility = View.VISIBLE
+                            binding.rvBasket.visibility = View.GONE
+                            binding.layoutSummary.visibility = View.GONE
+                            binding.ivEmptyBasket.visibility = View.GONE
+                            binding.tvEmptyList.visibility = View.GONE
+                        }
+                        is ApiResult.Success -> {
+                            binding.lottieLoading.visibility = View.GONE
+                            binding.rvBasket.visibility = View.VISIBLE
+                            binding.layoutSummary.visibility = View.VISIBLE
+                            binding.ivEmptyBasket.visibility = View.GONE
+                            binding.tvEmptyList.visibility = View.GONE
+                            basketAdapter.submitList(result.data)
+                            setTotalPrice(result.data.sumOf { it.price })
+                        }
+                        is ApiResult.Error -> {
+                            binding.lottieLoading.visibility = View.GONE
+                            binding.rvBasket.visibility = View.GONE
+                            binding.layoutSummary.visibility = View.GONE
+                            binding.ivEmptyBasket.visibility = View.VISIBLE
+                            binding.tvEmptyList.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
-                    basketAdapter.submitList(basketItems)
-                    setTotalPrice(basketItems.sumOf { it.price * it.numberOfOrders })
                 }
             }
         }
-
-
     }
 
     private fun setTotalPrice(totalPrice: Int) {

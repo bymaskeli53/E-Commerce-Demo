@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.gundogar.e_commerce_demo.databinding.ItemProductBinding
 
 class ProductAdapter(
@@ -32,7 +31,6 @@ class ProductAdapter(
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_error_placeholder)
-                //transformations(RoundedCornersTransformation(8f))
             }
 
             root.setOnClickListener {
