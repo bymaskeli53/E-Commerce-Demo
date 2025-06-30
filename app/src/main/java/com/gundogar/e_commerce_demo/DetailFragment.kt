@@ -77,6 +77,12 @@ class DetailFragment : Fragment() {
     private fun setupAddToBasketButton() {
         binding.btnAddToBasket.setOnClickListener {
             addProductToBasket()
+
+            startFlyToCartAnimation(
+                binding.ivProductImage,
+                requireActivity().window.decorView.rootView as ViewGroup,
+                requireActivity().findViewById(R.id.btn_add_to_basket)
+            )
         }
     }
 
