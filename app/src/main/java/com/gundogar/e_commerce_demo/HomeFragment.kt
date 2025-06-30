@@ -1,6 +1,7 @@
 package com.gundogar.e_commerce_demo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var productAdapter: ProductAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +38,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeUiState()
+        observeFavorites() // Favorileri dinle
     }
-
 
     private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -50,7 +50,6 @@ class HomeFragment : Fragment() {
                             binding.shimmerContainer.startShimmer()
                             binding.shimmerContainer.visibility = View.VISIBLE
                             binding.rvProducts.visibility = View.GONE
-
                         }
 
                         is ApiResult.Success -> {
@@ -58,7 +57,6 @@ class HomeFragment : Fragment() {
                             binding.shimmerContainer.visibility = View.GONE
                             binding.rvProducts.visibility = View.VISIBLE
                             productAdapter.submitList(result.data.products)
-
                         }
 
                         is ApiResult.Error -> {
@@ -67,9 +65,21 @@ class HomeFragment : Fragment() {
                             binding.rvProducts.visibility = View.GONE
                             Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG)
                                 .show()
-
                         }
                     }
+                }
+            }
+        }
+    }
+
+    // Favoriler değiştiğinde adapter'ı güncelle
+    private fun observeFavorites() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favoriteViewModel.favorites.collect { favorites ->
+                    Log.d("HomeFragment", "Favorites changed, updating adapter. Count: ${favorites.size}")
+                    // Adapter'ı güncelle (favori ikonları yeniden çizilsin)
+                    productAdapter.notifyDataSetChanged()
                 }
             }
         }
@@ -84,11 +94,8 @@ class HomeFragment : Fragment() {
             onFavoriteClick = { product ->
                 favoriteViewModel.toggleFavorite(product.toFavoriteProduct())
             },
-            isFavorite = { productId ->
-                favoriteViewModel.favorites.value.any { it.productId == productId }
-            }
+            favoriteViewModel = favoriteViewModel // ViewModel'i direkt geçir
         )
         binding.rvProducts.adapter = productAdapter
     }
-
 }
