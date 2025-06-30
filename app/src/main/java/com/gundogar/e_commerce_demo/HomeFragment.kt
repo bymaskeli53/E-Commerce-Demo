@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeUiState()
-        observeFavorites() // Favorileri dinle
+        observeFavorites()
     }
 
     private fun observeUiState() {
@@ -72,13 +72,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // Favoriler değiştiğinde adapter'ı güncelle
+
     private fun observeFavorites() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 favoriteViewModel.favorites.collect { favorites ->
                     Log.d("HomeFragment", "Favorites changed, updating adapter. Count: ${favorites.size}")
-                    // Adapter'ı güncelle (favori ikonları yeniden çizilsin)
                     productAdapter.notifyDataSetChanged()
                 }
             }
