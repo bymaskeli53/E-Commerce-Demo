@@ -94,7 +94,9 @@ class HomeFragment : Fragment() {
             onFavoriteClick = { product ->
                 favoriteViewModel.toggleFavorite(product.toFavoriteProduct())
             },
-            favoriteViewModel = favoriteViewModel // ViewModel'i direkt geçir
+            isFavorite = { productId -> // Higher-order function
+                favoriteViewModel.isFavorite(productId)
+            }
         )
         binding.rvProducts.adapter = productAdapter
     }

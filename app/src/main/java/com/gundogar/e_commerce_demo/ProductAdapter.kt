@@ -12,7 +12,7 @@ import com.gundogar.e_commerce_demo.databinding.ItemHomeProductBinding
 class ProductAdapter(
     private val onItemClick: (Product) -> Unit,
     private val onFavoriteClick: (Product) -> Unit,
-    private val favoriteViewModel: FavoriteViewModel // FavoriteViewModel'i direkt al
+    private val isFavorite: (Int) -> Boolean // Higher-order function
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     inner class ProductViewHolder(val binding: ItemHomeProductBinding) :
@@ -37,7 +37,7 @@ class ProductAdapter(
             }
 
             // Favori durumunu kontrol et ve ikonu ayarla
-            val isFavorited = favoriteViewModel.isFavorite(product.id)
+            val isFavorited = isFavorite(product.id)
             ivFavorite.setImageResource(
                 if (isFavorited) R.drawable.ic_favorite else R.drawable.ic_unfavorite
             )
