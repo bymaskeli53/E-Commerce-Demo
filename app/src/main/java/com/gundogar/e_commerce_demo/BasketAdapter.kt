@@ -29,14 +29,20 @@ class BasketAdapter(
         with(holder.binding) {
             ivBasketProductImage.load(product.image.toFullImageUrl()) {
                 crossfade(true)
-                placeholder(R.drawable.ic_launcher_background)
-                error(R.drawable.ic_launcher_foreground)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_error_placeholder)
             }
 
             tvBasketProductName.text = product.name
             tvBasketQuantity.text = product.numberOfOrders.toString()
-            tvBasketProductPrice.text = product.price.toString()
-            tvTotalPrice.text = (product.numberOfOrders * product.price).toString()
+            tvBasketProductPrice.text = buildString {
+                append(product.price.toString())
+                append(" TL")
+            }
+            tvTotalPrice.text = buildString {
+                append((product.numberOfOrders * product.price).toString())
+                append(" TL")
+            }
 
             btnDeleteProduct.setOnClickListener {
                 holder.itemView.animate()

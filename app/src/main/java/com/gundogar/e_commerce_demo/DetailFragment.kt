@@ -89,8 +89,8 @@ class DetailFragment : Fragment() {
 
     private fun loadProductImage(imageUrl: String) {
         binding.ivProductImage.load(imageUrl.toFullImageUrl()) {
-            placeholder(R.drawable.ic_launcher_background)
-            error(R.drawable.ic_launcher_background)
+            placeholder(R.drawable.ic_placeholder)
+            error(R.drawable.ic_error_placeholder)
             crossfade(enable = true)
             crossfade(durationMillis = 300)
         }

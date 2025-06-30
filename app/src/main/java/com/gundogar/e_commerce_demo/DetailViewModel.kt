@@ -2,6 +2,7 @@ package com.gundogar.e_commerce_demo
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import okio.EOFException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,12 +18,25 @@ class DetailViewModel @Inject constructor(private val productService: ProductSer
         siparisAdeti: Int,
         kullaniciAdi: String
     ) {
-        val basketResponse = productService.getBasketItems()
-        val existingProduct = basketResponse.basketProducts?.find {
-            it.name == ad
-        }
+        try {
+            val basketResponse = productService.getBasketItems()
+            val existingProduct = basketResponse.basketProducts?.find {
+                it.name == ad
+            }
 
-        if (existingProduct == null) {
+            if (existingProduct == null) {
+                productService.addToBasket(
+                    ad,
+                    resim,
+                    kategori,
+                    fiyat,
+                    marka,
+                    siparisAdeti,
+                    kullaniciAdi
+
+                )
+            }
+        } catch (e: EOFException) {
             productService.addToBasket(
                 ad,
                 resim,
@@ -34,6 +48,9 @@ class DetailViewModel @Inject constructor(private val productService: ProductSer
 
             )
         }
+
+
+
     }
 
 }

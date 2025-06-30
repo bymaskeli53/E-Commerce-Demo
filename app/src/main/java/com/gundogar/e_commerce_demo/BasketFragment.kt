@@ -45,8 +45,10 @@ class BasketFragment : Fragment() {
                 viewModel.basketItems.collect { basketItems ->
                     if (basketItems.isEmpty()) {
                         binding.tvEmptyList.show()
+                        binding.ivEmptyBasket.show()
                     } else {
                         binding.tvEmptyList.gone()
+                        binding.ivEmptyBasket.gone()
                     }
                     basketAdapter.submitList(basketItems)
                     setTotalPrice(basketItems.sumOf { it.price * it.numberOfOrders })
@@ -58,7 +60,11 @@ class BasketFragment : Fragment() {
     }
 
     private fun setTotalPrice(totalPrice: Int) {
-        binding.tvTotalPrice.text = totalPrice.toString()
+        binding.tvTotalPrice.text = buildString {
+            append("Toplam Tutar: ")
+            append(totalPrice.toString())
+            append(" TL")
+        }
     }
 
     private fun completeOrder() {
