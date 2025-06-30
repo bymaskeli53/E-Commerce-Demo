@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
 
+private const val FADE_OUT_ANIMATION_DURATION = 700L
+
 class BasketAdapter(
-    private val onItemClick: (BasketProduct) -> Unit
+    private val onItemDelete: (BasketProduct) -> Unit
 ) : ListAdapter<BasketProduct, BasketAdapter.BasketViewHolder>(BasketProductDiffCallback) {
 
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
@@ -37,7 +39,13 @@ class BasketAdapter(
             tvTotalPrice.text = (product.numberOfOrders * product.price).toString()
 
             btnDeleteProduct.setOnClickListener {
-                onItemClick(product)
+                holder.itemView.animate()
+                    .alpha(0f)
+                    .setDuration(FADE_OUT_ANIMATION_DURATION)
+                    .withEndAction {
+                        onItemDelete(product)
+                    }
+                    .start()
             }
         }
     }
