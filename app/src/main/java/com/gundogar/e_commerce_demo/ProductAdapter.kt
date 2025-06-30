@@ -2,26 +2,30 @@ package com.gundogar.e_commerce_demo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.gundogar.e_commerce_demo.databinding.ItemProductBinding
+import com.gundogar.e_commerce_demo.databinding.ItemHomeProductBinding
 
 class ProductAdapter(
     private val onItemClick: (Product) -> Unit
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
-    inner class ProductViewHolder(val binding: ItemProductBinding) :
+    inner class ProductViewHolder(val binding: ItemHomeProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHomeProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
+
+        var isFavorited = false // Dilersen ViewModel’den çek
+
 
         with(holder.binding) {
             tvProductName.text = product.name
@@ -31,6 +35,15 @@ class ProductAdapter(
                 crossfade(true)
                 placeholder(R.drawable.ic_placeholder)
                 error(R.drawable.ic_error_placeholder)
+            }
+
+            ivFavorite.setOnClickListener {
+                isFavorited = !isFavorited
+                val drawableRes = if (isFavorited) R.drawable.ic_favorite else R.drawable.ic_unfavorite
+                ivFavorite.setImageResource(drawableRes)
+
+                val animation = AnimationUtils.loadAnimation(root.context, R.anim.heart_toggle)
+                ivFavorite.startAnimation(animation)
             }
 
             root.setOnClickListener {
