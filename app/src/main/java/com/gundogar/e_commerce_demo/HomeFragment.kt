@@ -5,15 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.gundogar.e_commerce_demo.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -22,7 +19,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
+    private val favoriteViewModel: FavoriteViewModel by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var productAdapter: ProductAdapter
@@ -46,7 +44,7 @@ class HomeFragment : Fragment() {
     private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect { result ->
+                homeViewModel.products.collect { result ->
                     when (result) {
                         is ApiResult.Loading -> {
                             binding.shimmerContainer.startShimmer()
@@ -67,7 +65,8 @@ class HomeFragment : Fragment() {
                             binding.shimmerContainer.stopShimmer()
                             binding.shimmerContainer.visibility = View.GONE
                             binding.rvProducts.visibility = View.GONE
-                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG)
+                                .show()
 
                         }
                     }
@@ -77,10 +76,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        productAdapter = ProductAdapter(onItemClick = {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
-            findNavController().navigate(action)
-        })
+        productAdapter = ProductAdapter(
+            onItemClick = { product ->
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(product)
+                findNavController().navigate(action)
+            },
+            onFavoriteClick = { product ->
+                favoriteViewModel.toggleFavorite(product.toFavoriteProduct())
+            },
+            isFavorite = { productId ->
+                favoriteViewModel.favorites.value.any { it.productId == productId }
+            }
+        )
         binding.rvProducts.adapter = productAdapter
     }
 

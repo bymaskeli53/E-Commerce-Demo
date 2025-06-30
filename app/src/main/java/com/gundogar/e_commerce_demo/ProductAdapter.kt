@@ -10,7 +10,9 @@ import coil.load
 import com.gundogar.e_commerce_demo.databinding.ItemHomeProductBinding
 
 class ProductAdapter(
-    private val onItemClick: (Product) -> Unit
+    private val onItemClick: (Product) -> Unit,
+    private val onFavoriteClick: (Product) -> Unit,
+    private val isFavorite: (Int) -> Boolean
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     inner class ProductViewHolder(val binding: ItemHomeProductBinding) :
@@ -24,9 +26,6 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
 
-        var isFavorited = false // Dilersen ViewModel’den çek
-
-
         with(holder.binding) {
             tvProductName.text = product.name
             tvProductPrice.text = "${product.price} TL"
@@ -38,9 +37,12 @@ class ProductAdapter(
             }
 
             ivFavorite.setOnClickListener {
-                isFavorited = !isFavorited
-                val drawableRes = if (isFavorited) R.drawable.ic_favorite else R.drawable.ic_unfavorite
-                ivFavorite.setImageResource(drawableRes)
+                val isFavorited = isFavorite(product.id)
+                onFavoriteClick(product)
+
+                ivFavorite.setImageResource(
+                    if (isFavorited) R.drawable.ic_favorite else R.drawable.ic_unfavorite
+                )
 
                 val animation = AnimationUtils.loadAnimation(root.context, R.anim.heart_toggle)
                 ivFavorite.startAnimation(animation)
@@ -62,3 +64,4 @@ class ProductAdapter(
         }
     }
 }
+
