@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,6 +21,10 @@ class BasketFragment : Fragment() {
 
     private val viewModel: BasketViewModel by viewModels()
 
+    private val basketAdapter = BasketAdapter {
+        viewModel.deleteBasketItems(it.basketId)
+    }
+
     private lateinit var binding: FragmentBasketBinding
 
     override fun onCreateView(
@@ -35,21 +38,18 @@ class BasketFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         completeOrder()
+
+        binding.rvBasket.adapter = basketAdapter
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.basketItems.collect {
-                    if (it.isEmpty()) {
+                viewModel.basketItems.collect { basketItems ->
+                    if (basketItems.isEmpty()) {
                         binding.tvEmptyList.show()
-                    }
-                    else {
+                    } else {
                         binding.tvEmptyList.gone()
                     }
-                    val adapter = BasketAdapter(it) {
-                        viewModel.deleteBasketItems(it.basketId)
-
-                    }
-                    binding.rvBasket.adapter = adapter
-                    setTotalPrice(it.sumOf { it.price * it.numberOfOrders })
+                    basketAdapter.submitList(basketItems)
+                    setTotalPrice(basketItems.sumOf { it.price * it.numberOfOrders })
                 }
             }
         }
