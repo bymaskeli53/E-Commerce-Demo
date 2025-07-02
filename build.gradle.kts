@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.parcelize) apply false
     alias(libs.plugins.navigation.safeArgsKotlin) apply false
+    alias(libs.plugins.google.gms.google.services) apply false
 }

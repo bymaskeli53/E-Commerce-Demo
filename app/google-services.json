@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "120612206493",
+    "project_id": "e-commerce-demo-8f985",
+    "storage_bucket": "e-commerce-demo-8f985.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120612206493:android:68df62468dcf8c9ba0a174",
+        "android_client_info": {
+          "package_name": "com.gundogar.e_commerce_demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQjF3sYMhIU4bPI-KHtyo8wbaUgO5HM5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.navigation.safeArgsKotlin)
     alias(libs.plugins.parcelize)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -91,5 +92,11 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase))
+    implementation(libs.firebase.auth)
+    implementation(libs.googleid)
+    implementation(libs.play.services.auth)
 
 }
