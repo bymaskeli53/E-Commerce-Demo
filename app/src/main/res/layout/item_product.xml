@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Ürün Görseli -->
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_product"
             android:layout_width="match_parent"
@@ -25,7 +25,6 @@
             card_view:shapeAppearanceOverlay="@style/ImageView.Corner"
             android:scaleType="fitCenter" />
 
-        <!-- Ürün Adı -->
         <TextView
             android:id="@+id/tv_product_name"
             android:layout_width="match_parent"
@@ -37,7 +36,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- Ürün Fiyatı -->
         <TextView
             android:id="@+id/tv_product_price"
             android:layout_width="match_parent"
