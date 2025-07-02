@@ -40,7 +40,14 @@ class MainActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right,0)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom) // bottom padding kaldırıldı
+            insets
+        }
+
+        // Bottom navigation için ayrı inset listener
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(0, 0, 0, -60) // Sadece alt padding
             insets
         }
     }
