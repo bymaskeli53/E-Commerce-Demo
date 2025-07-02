@@ -10,4 +10,10 @@
     <color name="error_color">#F44336</color>
     <color name="divider_color">#E0E0E0</color>
     <color name="card_background">#FFFFFF</color>
+
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_10">#1AFFFFFF</color>
+    <color name="accent_color">#FF21D4B4</color>
 </resources>
