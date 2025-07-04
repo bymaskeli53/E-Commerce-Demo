@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
+class RegisterViewModel @Inject constructor(private val authRepository: AuthRepository) :
+    ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState
@@ -24,13 +25,10 @@ class RegisterViewModel @Inject constructor(private val authRepository: AuthRepo
             if (result.isSuccess) {
                 _authState.value = AuthState.Success
             } else {
-                _authState.value = AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
+                _authState.value =
+                    AuthState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
             }
 
         }
     }
-
-
-
-
 }

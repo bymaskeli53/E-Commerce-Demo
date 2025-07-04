@@ -1,6 +1,5 @@
 package com.gundogar.e_commerce_demo.core.util
 
-import android.app.Activity
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

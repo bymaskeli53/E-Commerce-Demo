@@ -39,18 +39,23 @@ class MainActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom) // bottom padding kaldırıldı
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
-
-        // Bottom navigation için ayrı inset listener
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(0, 0, 0, -60) // Sadece alt padding
+            v.setPadding(0, 0, 0, -60)
             insets
         }
     }
-    override fun onSupportNavigateUp(): Boolean = super.onSupportNavigateUp() || navController.navigateUp()
+
+    override fun onSupportNavigateUp(): Boolean =
+        super.onSupportNavigateUp() || navController.navigateUp()
 
     private fun setBottomNavVisibilityForEachFragment(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->

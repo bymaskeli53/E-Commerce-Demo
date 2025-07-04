@@ -19,7 +19,6 @@ class BasketAdapter(
 ) : ListAdapter<BasketProduct, BasketAdapter.BasketViewHolder>(BasketProductDiffCallback) {
 
 
-
     inner class BasketViewHolder(val binding: ItemBasketBinding) :
         RecyclerView.ViewHolder(binding.root)
 

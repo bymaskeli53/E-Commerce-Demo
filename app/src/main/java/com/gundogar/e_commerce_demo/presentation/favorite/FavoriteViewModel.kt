@@ -19,7 +19,6 @@ class FavoriteViewModel @Inject constructor(
     private val _favorites = MutableStateFlow<List<FavoriteProduct>>(emptyList())
     val favorites: StateFlow<List<FavoriteProduct>> = _favorites
 
-    // Fragment açıldığında favorileri yükle
     init {
         loadFavorites()
     }
@@ -27,7 +26,6 @@ class FavoriteViewModel @Inject constructor(
     fun loadFavorites() {
         viewModelScope.launch {
             _favorites.value = repository.getAllFavorites()
-            Log.d("FavoriteViewModel", "Favorites loaded: ${_favorites.value.size}")
         }
     }
 
@@ -35,16 +33,13 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             if (isFavorite(product.productId)) {
                 repository.removeFavorite(product)
-                Log.d("FavoriteViewModel", "Removed from favorites: ${product.productId}")
             } else {
                 repository.addFavorite(product)
-                Log.d("FavoriteViewModel", "Added to favorites: ${product.productId}")
             }
-            loadFavorites() // Listeyi güncelle
+            loadFavorites()
         }
     }
 
-    // Suspend fonksiyonu kaldırdık, StateFlow'dan kontrol ediyoruz
     fun isFavorite(productId: Int): Boolean {
         return _favorites.value.any { it.productId == productId }
     }

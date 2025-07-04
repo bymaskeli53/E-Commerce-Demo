@@ -15,14 +15,15 @@ import com.gundogar.e_commerce_demo.core.util.toFullImageUrl
 class ProductAdapter(
     private val onItemClick: (Product) -> Unit,
     private val onFavoriteClick: (Product) -> Unit,
-    private val isFavorite: (Int) -> Boolean // Higher-order function
+    private val isFavorite: (Int) -> Boolean
 ) : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     inner class ProductViewHolder(val binding: ItemHomeProductBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = ItemHomeProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemHomeProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)
     }
 
@@ -39,7 +40,6 @@ class ProductAdapter(
                 error(R.drawable.ic_error_placeholder)
             }
 
-            // Favori durumunu kontrol et ve ikonu ayarla
             val isFavorited = isFavorite(product.id)
             ivFavorite.setImageResource(
                 if (isFavorited) R.drawable.ic_favorite else R.drawable.ic_unfavorite
