@@ -25,7 +25,10 @@ class FavoriteAdapter(private val favoriteList: List<FavoriteProduct>) :
     ) {
         holder.binding.apply {
             tvProductName.text = favoriteList[position].name
-            tvProductPrice.text = favoriteList[position].price.toString()
+            tvProductPrice.text = buildString {
+                append(favoriteList[position].price.toString())
+                append(" TL")
+            }
 
             ivProduct.load(favoriteList[position].image.toFullImageUrl()){
                 placeholder(R.drawable.ic_placeholder)

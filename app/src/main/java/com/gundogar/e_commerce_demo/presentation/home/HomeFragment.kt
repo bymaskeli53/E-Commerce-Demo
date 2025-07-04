@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.gundogar.e_commerce_demo.core.util.launchWhenStarted
 import com.gundogar.e_commerce_demo.data.remote.ApiResult
 import com.gundogar.e_commerce_demo.databinding.FragmentHomeBinding
 import com.gundogar.e_commerce_demo.presentation.favorite.FavoriteViewModel
@@ -42,6 +44,8 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         observeUiState()
         observeFavorites()
+        setupSearchView()
+        observeFilteredProducts()
     }
 
     private fun observeUiState() {
@@ -96,10 +100,24 @@ class HomeFragment : Fragment() {
             onFavoriteClick = { product ->
                 favoriteViewModel.toggleFavorite(product.toFavoriteProduct())
             },
-            isFavorite = { productId -> // Higher-order function
+            isFavorite = { productId ->
                 favoriteViewModel.isFavorite(productId)
             }
         )
         binding.rvProducts.adapter = productAdapter
+    }
+
+    private fun setupSearchView() {
+        binding.etSearch.addTextChangedListener { text ->
+            homeViewModel.filterProducts(text.toString())
+        }
+    }
+
+    private fun observeFilteredProducts() {
+        launchWhenStarted {
+            homeViewModel.filteredProducts.collect { filteredProducts ->
+                productAdapter.submitList(filteredProducts)
+            }
+        }
     }
 }
