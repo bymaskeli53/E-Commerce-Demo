@@ -67,7 +67,7 @@ class BasketFragment : Fragment() {
                             binding.ivEmptyBasket.visibility = View.GONE
                             binding.tvEmptyList.visibility = View.GONE
                             basketAdapter.submitList(result.data)
-                            setTotalPrice(result.data.sumOf { it.price })
+                            setTotalPrice(result.data.sumOf { it.price * it.numberOfOrders })
                         }
                         is ApiResult.Error -> {
                             binding.lottieLoading.visibility = View.GONE
