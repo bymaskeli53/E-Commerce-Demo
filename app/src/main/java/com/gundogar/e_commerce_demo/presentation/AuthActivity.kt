@@ -20,7 +20,6 @@ class AuthActivity : AppCompatActivity() {
 
     private val viewModel: AuthViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,7 +29,6 @@ class AuthActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //FirebaseAuth.getInstance().signOut()
         observeLoginState()
         viewModel.checkUserLoggedIn()
     }
