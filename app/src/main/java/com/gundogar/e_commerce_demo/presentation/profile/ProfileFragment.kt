@@ -36,10 +36,10 @@ class ProfileFragment : Fragment() {
         viewModel.loadUserEmail()
         launchWhenStarted {
             viewModel.email.collect { email ->
-                binding.tvEmail.text = email
+                binding.tvUserEmail.text = email
             }
         }
-        binding.btnLogout.setOnClickListener {
+        binding.layoutLogout.setOnClickListener {
             viewModel.signOut()
             requireActivity().finish()
             startActivity(Intent(requireContext(), AuthActivity::class.java))

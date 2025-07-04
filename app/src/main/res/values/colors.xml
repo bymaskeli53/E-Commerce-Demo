@@ -16,4 +16,7 @@
     <color name="white_30">#4DFFFFFF</color>
     <color name="white_10">#1AFFFFFF</color>
     <color name="accent_color">#FF21D4B4</color>
+
+    <color name="success_color">#00d2d3</color>
+
 </resources>

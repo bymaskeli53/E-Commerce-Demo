@@ -13,17 +13,14 @@ import kotlinx.coroutines.launch
 
 fun String.toFullImageUrl(): String = IMAGE_BASE_URL + this
 
-// Extension function to set the visibility to VISIBLE
 fun View.show() {
     visibility = View.VISIBLE
 }
 
-// Extension function to set the visibility to INVISIBLE
 fun View.hide() {
     visibility = View.INVISIBLE
 }
 
-// Extension function to set the visibility to GONE
 fun View.gone() {
     visibility = View.GONE
 }
