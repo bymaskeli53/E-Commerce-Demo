@@ -125,16 +125,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
-    <View
-        android:id="@+id/divider_left"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/white_30"
-        app:layout_constraintEnd_toStartOf="@+id/tv_or"
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
 
     <TextView
         android:id="@+id/tv_or"
@@ -172,13 +174,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_sign_up"
+        android:id="@+id/tv_go_to_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Hesabınız yok mu? Kayıt Olun"
-        android:textColor="@color/white_80"
-        android:textSize="14sp"
+        android:text="Hesabınız varsa giriş yapın"
+        android:textColor="#21D4B4"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
