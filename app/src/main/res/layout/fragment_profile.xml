@@ -129,7 +129,7 @@
                         android:id="@+id/tv_total_spent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2450 TL"
+                        android:text="24500 TL"
                         android:textColor="@color/success_color"
                         android:textSize="28sp"
                         android:textStyle="bold" />
