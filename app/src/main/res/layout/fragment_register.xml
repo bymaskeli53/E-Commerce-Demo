@@ -34,20 +34,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Hesap oluşturun"
-        android:textColor="@color/primary_color"
-        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#0B0C0D"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
 
-    <!-- Email Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:hint="E-posta"
+        android:hint="Email"
         app:boxBackgroundColor="@color/white_10"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -55,8 +55,7 @@
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeWidth="2dp"
         app:endIconMode="clear_text"
-        app:endIconTint="@color/white"
-        app:startIconTint="@color/white"
+        app:hintTextColor="@color/accent_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_subtitle">
@@ -84,6 +83,7 @@
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeWidth="2dp"
         app:endIconMode="password_toggle"
+        app:hintTextColor="@color/accent_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_email">
@@ -114,8 +114,8 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="@null"
         android:background="@drawable/login_button_background"
+        android:backgroundTint="@null"
         android:text="Kayıt Ol"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -126,17 +126,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
 
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="24dp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_or"
@@ -165,8 +164,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_or">
