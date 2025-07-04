@@ -46,6 +46,7 @@ class HomeFragment : Fragment() {
         observeFavorites()
         setupSearchView()
         observeFilteredProducts()
+        binding.marqueeText.isSelected = true
     }
 
     private fun observeUiState() {
