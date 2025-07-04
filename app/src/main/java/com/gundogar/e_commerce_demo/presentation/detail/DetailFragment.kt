@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.google.firebase.auth.FirebaseAuth
 import com.gundogar.e_commerce_demo.R
 import com.gundogar.e_commerce_demo.databinding.FragmentDetailBinding
 import com.gundogar.e_commerce_demo.core.util.startFlyToCartAnimation
@@ -128,10 +129,10 @@ class DetailFragment : Fragment() {
                     ad = selectedProduct.name,
                     resim = selectedProduct.image,
                     kategori = selectedProduct.category,
-                    fiyat = selectedProduct.price.toInt(),
+                    fiyat = selectedProduct.price,
                     marka = selectedProduct.brand,
                     siparisAdeti = currentQuantity,
-                    kullaniciAdi = "muhammet_gundogar"
+                    kullaniciAdi = FirebaseAuth.getInstance().currentUser?.email!!
                 )
                 findNavController().popBackStack()
                 showToast("Ürün sepete eklendi.")

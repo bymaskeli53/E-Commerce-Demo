@@ -1,6 +1,7 @@
 package com.gundogar.e_commerce_demo.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.gundogar.e_commerce_demo.domain.AuthRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -26,5 +27,14 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    override fun getCurrentUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
+    }
+
+    override fun getCurrentUserEmail(): String? {
+        return firebaseAuth.currentUser?.email
+
     }
 }
