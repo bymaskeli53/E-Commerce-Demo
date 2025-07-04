@@ -37,4 +37,8 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseA
         return firebaseAuth.currentUser?.email
 
     }
+
+    override fun signOut() {
+        firebaseAuth.signOut()
+    }
 }

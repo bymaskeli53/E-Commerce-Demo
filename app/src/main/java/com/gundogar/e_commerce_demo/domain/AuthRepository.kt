@@ -8,6 +8,7 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): Result<Unit>
     fun getCurrentUser(): FirebaseUser?
     fun getCurrentUserEmail(): String? // 🔸 Eklenecek fonksiyon
+    fun signOut()
 
 
 
