@@ -19,4 +19,7 @@
 
     <color name="success_color">#00d2d3</color>
 
+    <color name="orange">#FF9800</color>
+    <color name="teal_700">#018786</color>
+
 </resources>
