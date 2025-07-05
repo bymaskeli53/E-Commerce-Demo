@@ -70,4 +70,4 @@ Open In Android Studio, Click on File > Open and select the cloned project direc
 
 ## Demo Video
 
-[Watch the video]([https://youtube.com/shorts/XIJ_W9GXXDg](https://youtube.com/shorts/gS7jIrsqv00?feature=share))
+[Watch the video]([https://youtube.com/shorts/XIJ_W9GXXDg](https://youtube.com/shorts/gS7jIrsqv00?feature=share)
