@@ -67,3 +67,7 @@ Open In Android Studio, Click on File > Open and select the cloned project direc
 | ![Home](screenshots/ss_home.png) | ![Home2](screenshots/ss_search.png) | ![Basket](screenshots/ss_basket.png) |
 | Favorite Screen | Detail Screen | Approve Screen |
 | ![Favorite](screenshots/ss_favorites.png) | ![Detail](screenshots/ss_detail.png) | ![Approve](screenshots/ss_approved.png) |
+
+## Demo Video
+
+[Watch the video](https://youtube.com/shorts/XIJ_W9GXXDg)
