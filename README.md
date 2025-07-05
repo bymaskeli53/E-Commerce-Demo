@@ -57,3 +57,13 @@ Open In Android Studio, Click on File > Open and select the cloned project direc
 ├── core/               # Common things shared in the project like constants, extensions, DI modules.
 └── README.md
 ```
+
+## 📸 Screenshots
+
+| Register Screen | Login Screen | Profile Screen |
+|------------|---------------|------------|
+| ![Sign In](screenshots/ss_register.png) | ![Sign Up](screenshots/ss_login.png) | ![Forgot Password](screenshots/ss_profile.png) |
+| Home Screen | Home Screen | Basket Screen |
+| ![Home](screenshots/ss_home.png) | ![Home2](screenshots/ss_search.png) | ![Basket](screenshots/ss_basket.png) |
+| Favorite Screen | Detail Screen | Approve Screen |
+| ![Favorite](screenshots/ss_favorites.png) | ![Detail](screenshots/ss_detail.png) | ![Approve](screenshots/ss_approved.png) |
