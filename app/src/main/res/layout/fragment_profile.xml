@@ -29,7 +29,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"
                     app:shapeAppearanceOverlay="@style/ImageView.Corner"
-                    android:src="@drawable/ic_profile" />
+                    android:src="@drawable/ic_avatar" />
 
                 <TextView
                     android:id="@+id/tv_user_name"
@@ -197,7 +197,6 @@
 
                 </LinearLayout>
 
-                <!-- Adreslerim -->
                 <LinearLayout
                     android:id="@+id/layout_addresses"
                     android:layout_width="match_parent"
@@ -233,7 +232,6 @@
 
                 </LinearLayout>
 
-                <!-- Favorilerim -->
                 <LinearLayout
                     android:id="@+id/layout_favorites"
                     android:layout_width="match_parent"
@@ -269,7 +267,6 @@
 
                 </LinearLayout>
 
-                <!-- Ödeme Yöntemleri -->
                 <LinearLayout
                     android:id="@+id/layout_payment"
                     android:layout_width="match_parent"
@@ -309,7 +306,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Ayarlar ve Çıkış -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -322,7 +318,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Ayarlar -->
                 <LinearLayout
                     android:id="@+id/layout_settings"
                     android:layout_width="match_parent"
@@ -358,7 +353,6 @@
 
                 </LinearLayout>
 
-                <!-- Çıkış Yap -->
                 <LinearLayout
                     android:id="@+id/layout_logout"
                     android:layout_width="match_parent"
